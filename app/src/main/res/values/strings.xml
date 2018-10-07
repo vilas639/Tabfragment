@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sqllite_SharePref</string>
+
+    <string name="username1">vilas</string>
+    <string name="password1">Vilas@123</string>
+    <string name="save_key">com.example.hp_pc.sqllite_sharepref_key</string>
+    <string name="save_status">com.example.hp_pc.sqllite_sharepref_status</string>
+</resources>
