@@ -26,7 +26,9 @@
         <activity android:name=".SqlliteActivity" />
         <activity android:name=".ImageTextActivity" />
         <activity android:name=".DisplayProfilelist" />
-        <activity android:name=".Showimg"></activity>
+        <activity android:name=".Showimg" />
+        <activity android:name=".FragmentListActivity" />
+        <activity android:name=".FragmentTabActivity"></activity>
     </application>
 
 </manifest>

@@ -49,7 +49,15 @@ public class Suceess extends AppCompatActivity implements View.OnClickListener {
                 Intent j =new Intent(this,ImageTextActivity.class);
                 startActivity(j);
                 break;
-              default:
+            case R.id.btnlistfragmnt:
+                Intent k =new Intent(this,FragmentListActivity.class);
+                startActivity(k);
+                break;
+            case R.id.btntabfragment:
+                Intent l =new Intent(this,FragmentTabActivity.class);
+                startActivity(l);
+                break;
+            default:
         }
 
     }
