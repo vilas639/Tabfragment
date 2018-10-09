@@ -14,7 +14,7 @@ public class Suceess extends AppCompatActivity implements View.OnClickListener {
 
 
     private TextView Profilename;
-    private Button logout,btnSqllite;
+    private Button logout,btnSqllite,btntabfragment,btnlistfragmnt;
   private SharePref  sharePref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +24,16 @@ public class Suceess extends AppCompatActivity implements View.OnClickListener {
         Profilename =(TextView) findViewById(R.id.profilename);
         logout =(Button) findViewById(R.id.logout);
         btnSqllite =(Button) findViewById(R.id.btnsqllite);
+        btnlistfragmnt =(Button) findViewById(R.id.btnlistfragmnt);
+        btntabfragment =(Button) findViewById(R.id.btntabfragment);
 
         sharePref =new SharePref(getApplicationContext());
 
 
         logout.setOnClickListener(this);
         btnSqllite.setOnClickListener(this);
+        btnlistfragmnt.setOnClickListener(this);
+        btntabfragment.setOnClickListener(this);
 
            Profilename.setText("Welcome"+getResources().getString(R.string.username1));
     }
