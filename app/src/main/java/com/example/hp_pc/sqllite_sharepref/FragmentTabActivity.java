@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 
-public class FragmentTabActivity extends AppCompatActivity {
+import com.example.hp_pc.sqllite_sharepref.TabFragment.TabFragment1;
+import com.example.hp_pc.sqllite_sharepref.TabFragment.TabFragment2;
+
+public class FragmentTabActivity extends AppCompatActivity  implements TabFragment1.SendMessage1{
 
 
     @Override
@@ -31,5 +34,15 @@ public class FragmentTabActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
 
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void SendData(String msg) {
+
+        String tag = "android:switcher:" + R.id.viewpager  + ":" + 1;
+
+        TabFragment2 tabFragment2 =(TabFragment2) getSupportFragmentManager().findFragmentByTag(tag);
+
+        tabFragment2.displayReceivedData(msg);
     }
 }

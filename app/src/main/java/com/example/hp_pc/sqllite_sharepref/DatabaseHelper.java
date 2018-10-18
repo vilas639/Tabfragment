@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
 import android.widget.ImageView;
 
+import com.example.hp_pc.sqllite_sharepref.TabFragment.Emp;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,11 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
       public static  final  int dbversion=1;
-      public static  final  String Tablename="ProfileTable";
       public static  final  String dbname="profile.db";
+
+      public static  final  String Tablename="ProfileTable";
+      public static  final  String TableEmp="TableEmp";
+
 
 
     private static final String PKID="id";
@@ -26,7 +31,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String AGE="age";
     private static final String  PROFILEIMAGE="profileimage";
 
+
+    private static final String EmpPKID="id";
+    private static final String EmpNAME="name";
+    private static final String EMpEmail="email";
+
     String CreateProfile ="CREATE TABLE IF NOT EXISTS "+Tablename+"("+PKID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+NAME+" TEXT, "+AGE+" TEXT, "+PROFILEIMAGE+" BLOB)";
+
+    String CreateEmp ="CREATE TABLE IF NOT EXISTS "+TableEmp+"("+EmpPKID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+EmpNAME+" TEXT, "+EMpEmail+" TEXT)";
 
 
     public DatabaseHelper(Context context) {
@@ -36,12 +48,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL(CreateProfile);
+            sqLiteDatabase.execSQL(CreateEmp);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+Tablename);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TableEmp);
         onCreate(sqLiteDatabase);
     }
 
@@ -149,6 +163,80 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //    }
 
 
+
+
+    //Emp
+
+    //add Emp
+
+    public void addEmp(Emp emp)
+    {
+        SQLiteDatabase sqLiteDatabase =this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(EmpNAME,emp.getEmpname());
+        contentValues.put(EMpEmail,emp.getEmpemail());
+       // contentValues.put(PROFILEIMAGE,profile.getImage());
+
+        sqLiteDatabase.insert(TableEmp,null,contentValues);
+
+        sqLiteDatabase.close();
+    }
+
+
+    //update profile
+
+    public int updateemp(Emp emp)
+    {
+        SQLiteDatabase sqLiteDatabase =this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(EmpNAME,emp.getEmpname());
+        contentValues.put(EMpEmail,emp.getEmpemail());
+        // contentValues.put(PROFILEIMAGE,profile.getImage());
+
+        return sqLiteDatabase.update(TableEmp,contentValues,EmpPKID+" =? ",new String[]{String.valueOf(emp.getEmpid())});
+
+    }
+
+    //read all data
+    public List<Emp> getAllEmp()
+    {
+        SQLiteDatabase sqLiteDatabase =this.getWritableDatabase();
+        //creata arraylist
+        List<Emp> emplist =new ArrayList<>();
+
+        String selectall ="SELECT * FROM "+ TableEmp+"";
+
+        Cursor cursor   =sqLiteDatabase.rawQuery(selectall,null);
+
+        if(cursor.moveToFirst())
+        {
+            do {
+
+                Emp emp =new Emp();
+                emp.setEmpid(Integer.parseInt(cursor.getString(0)));
+                emp.setEmpname(cursor.getString(1));
+                emp.setEmpemail(cursor.getString(2));
+               // profile.setImage(cursor.getBlob(3));
+
+                emplist.add(emp);
+            }
+            while (cursor.moveToNext());
+        }
+        return emplist;
+    }
+
+
+    //delete rowe
+
+    public void deleteemp(Emp emp )
+    {
+        SQLiteDatabase sqLiteDatabase =this.getWritableDatabase();
+
+        sqLiteDatabase.delete(TableEmp,PKID +" =? ",new String [] {String.valueOf(emp.getEmpid())});
+
+        sqLiteDatabase.close();
+
+    }
     public byte[] convertbitmaptobyte(ImageView imageView)
     {
 
